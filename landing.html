@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>FollowWatch — See Who Unfollowed You on Instagram</title>
+<meta name="description" content="Find out exactly who unfollowed you on Instagram in real time. Silent background tracking. No guessing. Know instantly. Free to start."/>
+<meta property="og:title" content="FollowWatch — See Who Unfollowed You on Instagram"/>
+<meta property="og:description" content="Real-time Instagram unfollower tracking. Free to start. No guessing, ever."/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="FollowWatch — See Who Unfollowed You on Instagram"/>
+<meta name="twitter:description" content="Real-time Instagram unfollower tracking. Free to start."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f8f7f4;--bg2:#f0efe9;--bg3:#e6e4da;
+  --ink:#0f0e0c;--ink2:#5c5850;--ink3:#a09b90;
+  --acc:#e8341a;--grn:#1a7a42;--grn2:#22c55e;--gold:#c8860a;
+  --bd:rgba(15,14,12,.08);--bd2:rgba(15,14,12,.14);
+  --ig:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:rgba(232,52,26,.12)}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--bd2)}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 6vw;background:rgba(248,247,244,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--bd)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-mark{width:30px;height:30px;border-radius:8px;background:var(--ig);display:flex;align-items:center;justify-content:center}
+.logo-mark svg{width:14px;height:14px;fill:white}
+.logo-name{font-family:'Instrument Serif',serif;font-size:17px;color:var(--ink)}
+.nav-r{display:flex;align-items:center;gap:22px}
+.nav-link{font-size:14px;color:var(--ink2);text-decoration:none;transition:color .15s}
+.nav-link:hover{color:var(--ink)}
+.nav-btn{background:var(--ink);color:#fff;text-decoration:none;border-radius:100px;padding:9px 22px;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;transition:all .18s}
+.nav-btn:hover{background:#272521;transform:translateY(-1px)}
+@media(max-width:600px){.nav-link{display:none}}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:100px 6vw 80px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-10%;left:50%;transform:translateX(-50%);width:900px;height:500px;background:radial-gradient(ellipse,rgba(232,52,26,.06),transparent 65%);pointer-events:none}
+.hero-kicker{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--bd2);border-radius:100px;padding:6px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--ink2);margin-bottom:28px;box-shadow:0 1px 8px rgba(0,0,0,.05);animation:fadeUp .6s ease both}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--grn2);animation:blink 2s ease-in-out infinite;box-shadow:0 0 6px var(--grn2)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-family:'Instrument Serif',serif;font-size:clamp(44px,7.5vw,88px);line-height:1.03;letter-spacing:-2.5px;color:var(--ink);margin-bottom:22px;max-width:860px;animation:fadeUp .7s .1s ease both}
+.hero h1 em{font-style:italic;color:var(--acc)}
+.hero-sub{font-size:clamp(15px,1.8vw,19px);color:var(--ink2);line-height:1.7;max-width:500px;margin:0 auto 36px;font-weight:300;animation:fadeUp .7s .2s ease both}
+.hero-btns{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;margin-bottom:48px;animation:fadeUp .7s .3s ease both}
+.btn-main{background:var(--ink);color:#fff;border:none;border-radius:100px;padding:15px 34px;font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;box-shadow:0 4px 20px rgba(15,14,12,.18)}
+.btn-main:hover{background:#272521;transform:translateY(-2px);box-shadow:0 8px 30px rgba(15,14,12,.22)}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--bd2);border-radius:100px;padding:14px 28px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+.btn-ghost:hover{border-color:var(--ink);transform:translateY(-1px)}
+.hero-proof{display:flex;align-items:center;gap:14px;justify-content:center;font-size:13px;color:var(--ink3);animation:fadeUp .7s .4s ease both}
+.proof-faces{display:flex}
+.proof-face{width:26px;height:26px;border-radius:50%;border:2px solid var(--bg);background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--ink2);margin-left:-7px}
+.proof-face:first-child{margin-left:0}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.hero-visual{margin-top:56px;position:relative;display:flex;justify-content:center;animation:fadeUp .8s .5s ease both}
+.phone{width:240px;background:#0a0a0a;border-radius:38px;padding:10px;box-shadow:0 50px 120px rgba(0,0,0,.22),0 0 0 1px rgba(255,255,255,.06)}
+.phone-inner{background:#060606;border-radius:28px;overflow:hidden}
+.phone-notch{height:24px;background:#000;display:flex;align-items:center;justify-content:center}
+.phone-notch-pill{width:72px;height:12px;background:#111;border-radius:10px}
+.phone-screen{padding:14px 12px 18px}
+.ps-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.ps-ava{position:relative;width:28px;height:28px}
+.ps-ava-ring{position:absolute;inset:-2px;border-radius:50%;background:var(--ig)}
+.ps-ava-face{position:absolute;inset:2px;border-radius:50%;background:#1c1c1c;display:flex;align-items:center;justify-content:center;font-family:'Instrument Serif',serif;font-style:italic;font-size:9px;color:#f0ebe2}
+.ps-name{font-family:'Instrument Serif',serif;font-style:italic;font-size:11px;color:#f0ebe2}
+.ps-pro-badge{font-family:'JetBrains Mono',monospace;font-size:7px;background:rgba(240,192,64,.1);border:1px solid rgba(240,192,64,.2);color:#f0c040;border-radius:10px;padding:2px 7px}
+.ps-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:10px}
+.ps-stat{background:#141414;border:1px solid rgba(255,255,255,.05);border-radius:9px;padding:8px 7px}
+.ps-stat-n{font-family:'Instrument Serif',serif;font-style:italic;font-size:17px;line-height:1;margin-bottom:2px}
+.ps-stat-l{font-family:'JetBrains Mono',monospace;font-size:6px;color:#383330;letter-spacing:.4px;text-transform:uppercase}
+.ps-card{background:#141414;border:1px solid rgba(255,255,255,.05);border-radius:9px;padding:9px 10px}
+.ps-card-lbl{font-family:'JetBrains Mono',monospace;font-size:7px;color:#383330;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}
+.ps-row{display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.03)}
+.ps-row:last-child{border-bottom:none}
+.ps-pic{width:22px;height:22px;border-radius:50%;flex-shrink:0}
+.ps-info{flex:1}
+.ps-h{height:6px;background:#2a2a2a;border-radius:2px;margin-bottom:3px}
+.ps-n{height:5px;background:#1c1c1c;border-radius:2px;width:55%}
+.ps-t{font-family:'JetBrains Mono',monospace;font-size:7px;color:#ff4d4d}
+.phone-notif{position:absolute;top:40px;right:-80px;background:#fff;border-radius:14px;padding:9px 12px;box-shadow:0 8px 28px rgba(0,0,0,.13);display:flex;align-items:center;gap:8px;white-space:nowrap;animation:floatY 3.5s ease-in-out infinite}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.notif-ig{width:28px;height:28px;border-radius:8px;background:var(--ig);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.notif-ig svg{width:12px;height:12px;fill:white}
+.notif-t{font-size:11px;font-weight:600;color:var(--ink);margin-bottom:1px}
+.notif-s{font-size:11px;color:var(--ink2)}
+@media(max-width:480px){.phone-notif{display:none}}
+.how{padding:100px 6vw;background:var(--bg)}
+.how-inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.section-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--acc);margin-bottom:12px}
+.section-h2{font-family:'Instrument Serif',serif;font-size:clamp(32px,4.5vw,52px);line-height:1.06;letter-spacing:-1.5px;color:var(--ink);margin-bottom:14px}
+.section-body{font-size:16px;color:var(--ink2);line-height:1.7;font-weight:300;margin-bottom:40px}
+.steps{display:flex;flex-direction:column}
+.step{display:flex;gap:18px;padding:22px 0;border-bottom:1px solid var(--bd)}
+.step:last-child{border-bottom:none}
+.step-num{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink3);flex-shrink:0;margin-top:2px;transition:all .25s}
+.step:hover .step-num{background:var(--ink);border-color:var(--ink);color:#fff}
+.step-t{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:5px}
+.step-d{font-size:13px;color:var(--ink2);line-height:1.6;font-weight:300}
+.how-card{background:#fff;border:1px solid var(--bd);border-radius:24px;padding:28px;box-shadow:0 16px 48px rgba(0,0,0,.07)}
+.hc-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.hc-title{font-family:'Instrument Serif',serif;font-size:16px;color:var(--ink)}
+.hc-live{display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--grn);letter-spacing:.4px}
+.hc-ldot{width:5px;height:5px;border-radius:50%;background:var(--grn2);animation:blink 2s infinite}
+.hc-rows{display:flex;flex-direction:column}
+.hc-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--bd)}
+.hc-row:last-child{border-bottom:none}
+.hc-ava{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff}
+.hc-inf{flex:1}
+.hc-handle{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:1px}
+.hc-when{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink3)}
+.hc-badge{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 9px;border-radius:6px}
+.hc-badge.u{background:rgba(232,52,26,.07);color:var(--acc);border:1px solid rgba(232,52,26,.12)}
+.hc-badge.n{background:rgba(34,197,94,.07);color:var(--grn);border:1px solid rgba(34,197,94,.12)}
+@media(max-width:760px){.how-inner{grid-template-columns:1fr;gap:40px}.how-card{display:none}}
+.features{background:var(--ink);padding:100px 6vw}
+.features-inner{max-width:1080px;margin:0 auto}
+.features .section-tag{color:rgba(255,255,255,.28)}
+.features .section-h2{color:#fff}
+.features .section-body{color:rgba(255,255,255,.45);margin-bottom:52px}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);border-radius:22px;overflow:hidden}
+.feat-item{background:var(--ink);padding:32px 28px;transition:background .2s}
+.feat-item:hover{background:#18170f}
+.fi-icon{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:18px}
+.fi-title{font-size:15px;font-weight:600;color:#fff;margin-bottom:7px}
+.fi-desc{font-size:13px;color:rgba(255,255,255,.38);line-height:1.65;font-weight:300}
+.fi-pro{display:inline-block;margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.5px;text-transform:uppercase;background:rgba(240,192,64,.1);color:#f0c040;border:1px solid rgba(240,192,64,.18);border-radius:4px;padding:3px 8px}
+.fi-free{display:inline-block;margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.5px;text-transform:uppercase;background:rgba(34,197,94,.08);color:#22c55e;border:1px solid rgba(34,197,94,.18);border-radius:4px;padding:3px 8px}
+@media(max-width:860px){.feat-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.feat-grid{grid-template-columns:1fr}}
+.ad-strip{background:var(--bg2);border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:28px 6vw}
+.ad-strip-inner{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:18px}
+.ad-strip-icon{font-size:24px;flex-shrink:0}
+.ad-strip-t{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.ad-strip-b{font-size:13px;color:var(--ink2);font-weight:300;line-height:1.55}
+.ad-strip-badge{flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.5px;text-transform:uppercase;background:rgba(200,134,10,.08);color:var(--gold);border:1px solid rgba(200,134,10,.18);border-radius:20px;padding:5px 13px;white-space:nowrap}
+@media(max-width:560px){.ad-strip-badge{display:none}}
+.pricing{padding:100px 6vw;background:var(--bg)}
+.pricing-inner{max-width:1080px;margin:0 auto}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:740px;margin:52px auto 0}
+.plan{border-radius:22px;padding:36px 32px;position:relative;overflow:hidden}
+.plan-free{background:#fff;border:1px solid var(--bd)}
+.plan-pro{background:var(--ink)}
+.plan-pro::before{content:'';position:absolute;top:0;left:0;right:0;height:180px;background:radial-gradient(ellipse at 50% -20%,rgba(232,52,26,.18),transparent 70%);pointer-events:none}
+.plan-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.8px;text-transform:uppercase;color:var(--ink3);margin-bottom:14px}
+.plan-pro .plan-tag{color:rgba(255,255,255,.3)}
+.plan-price{font-family:'Instrument Serif',serif;font-size:54px;letter-spacing:-2px;line-height:1;color:var(--ink);margin-bottom:5px}
+.plan-pro .plan-price{color:#fff}
+.plan-cadence{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink3);margin-bottom:26px;letter-spacing:.2px}
+.plan-pro .plan-cadence{color:rgba(255,255,255,.28)}
+.plan-feats{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.pf{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:var(--ink2);font-weight:300;line-height:1.5}
+.plan-pro .pf{color:rgba(255,255,255,.6)}
+.pf-y{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--grn2);flex-shrink:0;margin-top:2px}
+.plan-pro .pf-y{color:#36f0a0}
+.pf-n{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink3);flex-shrink:0;margin-top:2px}
+.btn-free{width:100%;padding:13px;background:var(--bg2);border:1.5px solid var(--bd2);border-radius:11px;color:var(--ink);font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;display:block;text-align:center;transition:all .15s}
+.btn-free:hover{background:var(--bg3);border-color:var(--ink)}
+.btn-pro{width:100%;padding:13px;background:#fff;border:none;border-radius:11px;color:var(--ink);font-size:14px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;display:block;text-align:center;transition:all .15s;box-shadow:0 4px 18px rgba(255,255,255,.12)}
+.btn-pro:hover{opacity:.92;transform:translateY(-1px)}
+.plan-popular{position:absolute;top:18px;right:18px;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.5px;text-transform:uppercase;background:rgba(240,192,64,.12);color:#f0c040;border:1px solid rgba(240,192,64,.22);border-radius:20px;padding:4px 10px}
+@media(max-width:560px){.pricing-grid{grid-template-columns:1fr}}
+.faq{padding:100px 6vw;background:var(--bg2)}
+.faq-inner{max-width:720px;margin:0 auto}
+.faq-list{margin-top:44px;border:1px solid var(--bd);border-radius:20px;overflow:hidden;background:#fff}
+.faq-item{border-bottom:1px solid var(--bd)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{width:100%;padding:20px 24px;background:none;border:none;text-align:left;font-size:14px;font-weight:500;color:var(--ink);font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:background .15s}
+.faq-q:hover{background:var(--bg)}
+.faq-icon{font-size:16px;color:var(--ink3);transition:transform .25s cubic-bezier(.4,0,.2,1);flex-shrink:0}
+.faq-item.open .faq-icon{transform:rotate(45deg);color:var(--ink)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .32s cubic-bezier(.4,0,.2,1)}
+.faq-item.open .faq-a{max-height:300px}
+.faq-a-inner{padding:0 24px 20px;font-size:13px;color:var(--ink2);line-height:1.75;font-weight:300}
+.cta-banner{background:var(--ink);padding:80px 6vw;text-align:center}
+.cta-inner{max-width:600px;margin:0 auto}
+.cta-h2{font-family:'Instrument Serif',serif;font-size:clamp(32px,5vw,52px);line-height:1.06;letter-spacing:-1.5px;color:#fff;margin-bottom:14px}
+.cta-h2 em{font-style:italic;color:rgba(255,100,80,.9)}
+.cta-sub{font-size:16px;color:rgba(255,255,255,.45);margin-bottom:32px;font-weight:300}
+footer{background:#0a0908;padding:48px 6vw 36px}
+.footer-inner{max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.footer-logo{display:flex;align-items:center;gap:9px;text-decoration:none}
+.footer-logo-name{font-family:'Instrument Serif',serif;font-size:15px;color:rgba(255,255,255,.5)}
+.footer-links{display:flex;gap:22px}
+.footer-links a{font-size:13px;color:rgba(255,255,255,.3);text-decoration:none;transition:color .15s}
+.footer-links a:hover{color:rgba(255,255,255,.65)}
+.footer-copy{font-size:12px;color:rgba(255,255,255,.2);font-family:'JetBrains Mono',monospace}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </div>
+    <span class="logo-name">FollowWatch</span>
+  </a>
+  <div class="nav-r">
+    <a href="#features" class="nav-link">Features</a>
+    <a href="#pricing" class="nav-link">Pricing</a>
+    <a href="#faq" class="nav-link">FAQ</a>
+    <a href="/app" class="nav-btn">Get started free</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-kicker"><span class="live-dot"></span>Real-time tracking &middot; Free to start</div>
+  <h1>Know exactly<br/><em>who left.</em></h1>
+  <p class="hero-sub">FollowWatch silently tracks your Instagram followers and tells you the moment someone unfollows you. No guessing. No waiting.</p>
+  <div class="hero-btns">
+    <a href="/app" class="btn-main">Start tracking free &rarr;</a>
+    <a href="#how" class="btn-ghost">See how it works</a>
+  </div>
+  <div class="hero-proof">
+    <div class="proof-faces">
+      <div class="proof-face">M</div>
+      <div class="proof-face">J</div>
+      <div class="proof-face">A</div>
+      <div class="proof-face">S</div>
+    </div>
+    &nbsp;Free to start &middot; No credit card needed
+  </div>
+  <div class="hero-visual">
+    <div class="phone">
+      <div class="phone-inner">
+        <div class="phone-notch"><div class="phone-notch-pill"></div></div>
+        <div class="phone-screen">
+          <div class="ps-nav">
+            <div style="display:flex;align-items:center;gap:7px">
+              <div class="ps-ava"><div class="ps-ava-ring"></div><div class="ps-ava-face">Y</div></div>
+              <span class="ps-name">@yorugoat</span>
+            </div>
+            <div class="ps-pro-badge">PRO</div>
+          </div>
+          <div class="ps-stats">
+            <div class="ps-stat"><div class="ps-stat-n" style="color:#f0ebe2">4.2k</div><div class="ps-stat-l">followers</div></div>
+            <div class="ps-stat"><div class="ps-stat-n" style="color:#ff4d4d">12</div><div class="ps-stat-l">left</div></div>
+            <div class="ps-stat"><div class="ps-stat-n" style="color:#36f0a0">+8</div><div class="ps-stat-l">gained</div></div>
+          </div>
+          <div class="ps-card">
+            <div class="ps-card-lbl">Recent unfollowers</div>
+            <div class="ps-row"><div class="ps-pic" style="background:#833ab4"></div><div class="ps-info"><div class="ps-h" style="width:70%"></div><div class="ps-n"></div></div><span class="ps-t">2h ago</span></div>
+            <div class="ps-row"><div class="ps-pic" style="background:#e6683c"></div><div class="ps-info"><div class="ps-h" style="width:55%"></div><div class="ps-n"></div></div><span class="ps-t">5h ago</span></div>
+            <div class="ps-row"><div class="ps-pic" style="background:#cc2366"></div><div class="ps-info"><div class="ps-h" style="width:80%"></div><div class="ps-n"></div></div><span class="ps-t">1d ago</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-notif">
+      <div class="notif-ig">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </div>
+      <div><div class="notif-t">New unfollower detected</div><div class="notif-s">Someone just left</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="how-inner">
+    <div>
+      <div class="section-tag">How it works</div>
+      <h2 class="section-h2">Set up in under<br/>60 seconds.</h2>
+      <p class="section-body">No browser extensions. No complicated setup. Just sign up, connect Instagram, and we handle everything in the background.</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div><div class="step-t">Create your free account</div><div class="step-d">Sign up with your email. Takes 10 seconds, no credit card needed.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div><div class="step-t">Connect your Instagram</div><div class="step-d">Enter your credentials. We only store a session token — your password is never saved.</div></div></div>
+        <div class="step"><div class="step-num">3</div><div><div class="step-t">We track in the background</div><div class="step-d">FollowWatch checks your followers automatically every 5 minutes.</div></div></div>
+        <div class="step"><div class="step-num">4</div><div><div class="step-t">See exactly who left</div><div class="step-d">A timestamped list of every unfollower, updated in real time.</div></div></div>
+      </div>
+    </div>
+    <div class="how-card">
+      <div class="hc-hdr">
+        <span class="hc-title">Unfollower log</span>
+        <span class="hc-live"><span class="hc-ldot"></span>Live</span>
+      </div>
+      <div class="hc-rows">
+        <div class="hc-row"><div class="hc-ava" style="background:#833ab4">J</div><div class="hc-inf"><div class="hc-handle">@jake.visuals</div><div class="hc-when">2 hours ago</div></div><span class="hc-badge u">Unfollowed</span></div>
+        <div class="hc-row"><div class="hc-ava" style="background:#e6683c">S</div><div class="hc-inf"><div class="hc-handle">@sophiamr</div><div class="hc-when">5 hours ago</div></div><span class="hc-badge u">Unfollowed</span></div>
+        <div class="hc-row"><div class="hc-ava" style="background:#22c55e">A</div><div class="hc-inf"><div class="hc-handle">@alex.photo</div><div class="hc-when">1 hour ago</div></div><span class="hc-badge n">New follower</span></div>
+        <div class="hc-row"><div class="hc-ava" style="background:#cc2366">M</div><div class="hc-inf"><div class="hc-handle">@mia.creates</div><div class="hc-when">Yesterday</div></div><span class="hc-badge u">Unfollowed</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="features-inner">
+    <div class="section-tag">Features</div>
+    <h2 class="section-h2" style="color:#fff">Everything you need<br/>to know your audience.</h2>
+    <p class="section-body">Free to start. Upgrade to Pro once for the full picture.</p>
+    <div class="feat-grid">
+      <div class="feat-item"><div class="fi-icon">&#128225;</div><div class="fi-title">Real-time unfollower tracking</div><div class="fi-desc">Checks every 5 minutes. See exactly who unfollowed you and when.</div><span class="fi-free">Free</span></div>
+      <div class="feat-item"><div class="fi-icon">&#128200;</div><div class="fi-title">New follower alerts</div><div class="fi-desc">See everyone who started following you since your last sync.</div><span class="fi-free">Free</span></div>
+      <div class="feat-item"><div class="fi-icon">&#9854;</div><div class="fi-title">Unlimited history</div><div class="fi-desc">Never lose track. Your full unfollower history stored forever.</div><span class="fi-pro">Pro</span></div>
+      <div class="feat-item"><div class="fi-icon">&#128064;</div><div class="fi-title">Who doesn't follow back</div><div class="fi-desc">See every account you follow that isn't following you back.</div><span class="fi-pro">Pro</span></div>
+      <div class="feat-item"><div class="fi-icon">&#128373;</div><div class="fi-title">Spy mode</div><div class="fi-desc">Track any public Instagram account and see their follower changes.</div><span class="fi-pro">Pro</span></div>
+      <div class="feat-item"><div class="fi-icon">&#128202;</div><div class="fi-title">CSV export</div><div class="fi-desc">Download your full unfollower history as a spreadsheet anytime.</div><span class="fi-pro">Pro</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="ad-strip">
+  <div class="ad-strip-inner">
+    <div class="ad-strip-icon">&#128250;</div>
+    <div>
+      <div class="ad-strip-t">Free plan is ad-supported</div>
+      <div class="ad-strip-b">A short ad plays when you open the app. Upgrade to Pro for a completely ad-free experience.</div>
+    </div>
+    <div class="ad-strip-badge">Ad-free with Pro</div>
+  </div>
+</div>
+
+<section class="pricing" id="pricing">
+  <div class="pricing-inner">
+    <div class="section-tag">Pricing</div>
+    <h2 class="section-h2">Simple, honest pricing.</h2>
+    <p class="section-body" style="margin-bottom:0">Free forever. Pay once for Pro. No subscription, no recurring charges.</p>
+    <div class="pricing-grid">
+      <div class="plan plan-free">
+        <div class="plan-tag">Free</div>
+        <div class="plan-price">&#163;0</div>
+        <div class="plan-cadence">Forever free</div>
+        <div class="plan-feats">
+          <div class="pf"><span class="pf-y">&#10003;</span>Unfollower tracking</div>
+          <div class="pf"><span class="pf-y">&#10003;</span>New follower alerts</div>
+          <div class="pf"><span class="pf-y">&#10003;</span>Auto-sync every 5 min</div>
+          <div class="pf"><span class="pf-n">&#8211;</span>1 unfollower visible at a time</div>
+          <div class="pf"><span class="pf-n">&#8211;</span>Ads on app load</div>
+          <div class="pf"><span class="pf-n">&#8211;</span>No spy mode</div>
+        </div>
+        <a href="/app" class="btn-free">Get started free</a>
+      </div>
+      <div class="plan plan-pro">
+        <div class="plan-popular">Most popular</div>
+        <div class="plan-tag">Pro</div>
+        <div class="plan-price">&#163;10</div>
+        <div class="plan-cadence">One-time &middot; Yours forever</div>
+        <div class="plan-feats">
+          <div class="pf"><span class="pf-y">&#10003;</span>Everything in Free</div>
+          <div class="pf"><span class="pf-y">&#10003;</span>Unlimited unfollower history</div>
+          <div class="pf"><span class="pf-y">&#10003;</span>Who doesn't follow back</div>
+          <div class="pf"><span class="pf-y">&#10003;</span>Spy on any account</div>
+          <div class="pf"><span class="pf-y">&#10003;</span>CSV export</div>
+          <div class="pf"><span class="pf-y">&#10003;</span>100% ad-free</div>
+        </div>
+        <a href="https://buy.stripe.com/eVqcN5gi5e0JdysgS91B600" target="_blank" class="btn-pro">Upgrade to Pro &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="faq-inner">
+    <div class="section-tag">FAQ</div>
+    <h2 class="section-h2">Common questions.</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q">Is my Instagram password safe?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Your password goes directly to Instagram and is never stored by us. We only keep a session token — the same way staying logged in on the Instagram app works. You can revoke access at any time from Instagram's security settings.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Will Instagram ban my account?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">FollowWatch only reads your follower list passively — it never likes, comments, follows, or unfollows anything on your behalf. The risk is extremely low. We space out requests carefully to stay within Instagram's limits.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">How often does it check for unfollowers?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">FollowWatch checks your followers automatically every 5 minutes in the background. You can also trigger a manual sync anytime from the app dashboard.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What is the difference between Free and Pro?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">The free plan shows tracking and alerts but limits your unfollower list to 1 visible at a time and shows a short ad when you open the app. Pro gives you unlimited history, who doesn't follow back, spy mode, CSV export, and a completely ad-free experience — for a single one-time payment of £10.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Is it really a one-time payment with no subscription?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Yes. Pay £10 once and Pro is yours forever. No monthly fees, no renewals, no surprises.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Can I delete my data?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Absolutely. You can clear all your tracking data or delete your account entirely from the app settings at any time. Everything is wiped immediately.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <div class="cta-inner">
+    <h2 class="cta-h2">Stop wondering.<br/><em>Start knowing.</em></h2>
+    <p class="cta-sub">Free to start. Takes 60 seconds to set up.</p>
+    <a href="/app" class="btn-main" style="display:inline-flex;margin:0 auto">Start tracking free &rarr;</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </div>
+      <span class="footer-logo-name">FollowWatch</span>
+    </a>
+    <div class="footer-links">
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="/app">App</a>
+    </div>
+    <span class="footer-copy">2026 FollowWatch</span>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.faq-q').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var item=btn.closest('.faq-item');
+    var isOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open');});
+    if(!isOpen)item.classList.add('open');
+  });
+});
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+</script>
+</body>
+</html>
